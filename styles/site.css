@@ -24,3 +24,138 @@
 	width: 100%;
 	height: auto;
 }
+
+/* Sticky desktop header: no grey shadow line under the bar. */
+#ast-fixed-header .ast-primary-header-bar,
+#ast-fixed-header .main-header-bar,
+#ast-fixed-header .ast-main-header-wrap,
+.main-header-bar.ast-sticky-active {
+	box-shadow: none !important;
+	border-bottom: none !important;
+}
+
+/* Hero reel: never show native playback chrome. */
+.wp-block-video {
+	line-height: 0;
+	overflow: hidden;
+	background: transparent;
+}
+
+.wp-block-video video {
+	display: block;
+	background: transparent;
+}
+
+.wp-block-video video::-webkit-media-controls,
+.wp-block-video video::-webkit-media-controls-panel,
+.wp-block-video video::-webkit-media-controls-enclosure,
+.wp-block-video video::-webkit-media-controls-start-playback-button,
+.wp-block-video video::-webkit-media-controls-overlay-play-button {
+	display: none !important;
+	opacity: 0 !important;
+	-webkit-appearance: none;
+}
+
+/* HOME is only in the mobile menus; the logo already goes there. */
+.ast-mobile-header-content .page-item-7,
+#ast-hf-mobile-menu .page-item-7 {
+	display: none !important;
+}
+
+/* Keep the site ID at the theme's 94px size, with a little air on the left. */
+.custom-logo {
+	width: 94px !important;
+	height: auto !important;
+	max-height: 94px;
+}
+
+.site-header-primary-section-left .site-branding,
+.ast-mobile-header-wrap .site-branding {
+	padding-left: 0.55rem;
+}
+
+@media (max-width: 921px) {
+	/* Solid header so the reel cannot show through it or through the
+	   join with the dropdown. The 120px spacer is a few pixels short
+	   of the bar, which left a sliver of video at the top. */
+	.ast-mobile-header-wrap,
+	.ast-mobile-header-wrap .ast-primary-header-bar,
+	.ast-mobile-header-wrap .main-header-bar {
+		background: #fff !important;
+		box-shadow: none !important;
+		border-bottom: none !important;
+	}
+
+	.ast-mobile-header-content {
+		margin-top: -2px;
+		border-top: none !important;
+		box-shadow: none !important;
+	}
+
+	.home .entry-content > .wp-block-spacer:first-child {
+		height: 123px !important;
+	}
+
+	/* Home headline and subhead sit flush against the viewport. */
+	.home h3.wp-block-heading {
+		padding-left: 2.25rem !important;
+		padding-right: 2.25rem !important;
+		box-sizing: border-box;
+		max-width: 100%;
+	}
+
+	.home h3.wp-block-heading:first-of-type {
+		font-size: clamp(1.85rem, 8.4vw, 54px) !important;
+	}
+
+	/* Portfolio / Contact sit side by side, a little larger, with air between. */
+	.home .entry-content > .wp-block-buttons {
+		flex-direction: row !important;
+		flex-wrap: nowrap !important;
+		justify-content: center;
+		align-items: center;
+		gap: 1.15em;
+		padding-left: 1.25rem;
+		padding-right: 1.25rem;
+		box-sizing: border-box;
+	}
+
+	.home .entry-content > .wp-block-buttons .wp-block-button {
+		margin: 0 !important;
+		width: auto !important;
+	}
+
+	.home .entry-content > .wp-block-buttons .wp-block-button__link {
+		font-size: 1.08rem !important;
+		padding: 0.55em 1.45em !important;
+		white-space: nowrap;
+	}
+
+	/* Contact page tagline under the form. */
+	p.wp-elements-b5b26af46c1430f1007a16f6c83cca90 {
+		font-size: 0.95rem !important;
+		line-height: 1.35 !important;
+		padding-left: 2.25rem !important;
+		padding-right: 2.25rem !important;
+		box-sizing: border-box;
+		max-width: 100%;
+		overflow-wrap: break-word;
+	}
+
+	/* Keep a little air under the photo strip, without the old
+	   180px min-height that also pushed the team cards down. */
+	.uagb-block-75fd1b31 {
+		min-height: 0 !important;
+		padding-top: 1.15rem !important;
+		padding-bottom: 0 !important;
+		margin-bottom: 0 !important;
+	}
+
+	.uagb-block-173a9c4c {
+		padding-top: 0.6rem !important;
+	}
+
+	.page-id-20 .ra-photo-strip {
+		margin-top: 1.35rem !important;
+	}
+}
