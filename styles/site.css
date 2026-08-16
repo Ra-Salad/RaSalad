@@ -1,0 +1,26 @@
+/* Small site-wide adjustments that are not part of the original theme. */
+
+/* Home and contact photo strips stay a single row at every width and
+   simply shrink with the window. They are decoration, not something
+   to inspect, so they are allowed to get small. */
+.ra-photo-strip {
+	display: flex !important;
+	flex-wrap: nowrap !important;
+	align-items: stretch;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	gap: 0;
+}
+
+.ra-photo-strip > figure {
+	flex: 1 1 0;
+	min-width: 0;
+	margin: 0 !important;
+}
+
+.ra-photo-strip > figure img {
+	display: block;
+	width: 100%;
+	height: auto;
+}

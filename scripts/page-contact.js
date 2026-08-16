@@ -1,0 +1,4 @@
+document.addEventListener("DOMContentLoaded", function(){ window.addEventListener("DOMContentLoaded", function(){
+	UAGBForms.init( {"block_id":"0bde8b9a","reCaptchaEnable":false,"reCaptchaType":"v2","reCaptchaSiteKeyV2":"","reCaptchaSiteKeyV3":"","afterSubmitToEmail":"pjkoelbel@gmail.com","afterSubmitCcEmail":"tkoelbel41@gmail.com","afterSubmitBccEmail":"","afterSubmitEmailSubject":"Ra Salad - Form Submission","sendAfterSubmitEmail":true,"confirmationType":"message","hidereCaptchaBatch":false,"captchaMessage":"Please fill up the above captcha.","confirmationUrl":""}, '.uagb-block-0bde8b9a', 20 );
+});
+ });
