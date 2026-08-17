@@ -25,13 +25,63 @@
 	height: auto;
 }
 
-/* Sticky desktop header: no grey shadow line under the bar. */
+/* Home header sits over the reel. The theme leaves the bar transparent
+   (background:none), which reads as a thin grey line on the video.
+   Paint the whole stack white and cover the 1px join. */
+.home #masthead,
+.home #masthead .ast-main-header-wrap,
+.home #masthead .ast-primary-header-bar,
+.home #masthead .main-header-bar,
+.home #masthead .site-primary-header-wrap,
+.home #masthead .ast-mobile-header-wrap,
+.home #masthead .ast-mobile-header-wrap .ast-primary-header-bar,
+.home #masthead .ast-mobile-header-wrap .main-header-bar,
+.home.ast-theme-transparent-header #masthead .main-header-bar,
+.home.ast-theme-transparent-header.ast-header-break-point #masthead .main-header-bar,
+.home #ast-fixed-header,
+.home #ast-fixed-header .main-header-bar,
+.home #ast-fixed-header .ast-primary-header-bar {
+	background: #fff !important;
+	background-color: #fff !important;
+	box-shadow: none !important;
+	border: none !important;
+	border-bottom: none !important;
+	outline: none !important;
+}
+
+.home #masthead::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -2px;
+	height: 3px;
+	background: #fff;
+	pointer-events: none;
+	z-index: 2;
+}
+
+#masthead .ast-primary-header-bar,
+#masthead .main-header-bar,
+#ast-desktop-header .main-header-bar,
+#ast-mobile-header .main-header-bar,
 #ast-fixed-header .ast-primary-header-bar,
 #ast-fixed-header .main-header-bar,
 #ast-fixed-header .ast-main-header-wrap,
-.main-header-bar.ast-sticky-active {
+.main-header-bar.ast-sticky-active,
+.ast-theme-transparent-header .main-header-bar {
 	box-shadow: none !important;
+	border: none !important;
 	border-bottom: none !important;
+}
+
+.home .entry-content > .wp-block-spacer:first-child {
+	height: 126px !important;
+	background: #fff;
+}
+
+.home .wp-block-video {
+	margin-top: -2px;
 }
 
 /* Hero reel: never show native playback chrome. */
@@ -62,11 +112,28 @@
 	display: none !important;
 }
 
-/* Keep the site ID at the theme's 94px size, with a little air on the left. */
-.custom-logo {
+/* Keep the site ID square and unstretched, including when the sticky
+   bar shrinks the mark from 94px to 55px. */
+.custom-logo,
+.site-logo-img img {
 	width: 94px !important;
-	height: auto !important;
-	max-height: 94px;
+	height: 94px !important;
+	max-width: 94px !important;
+	max-height: 94px !important;
+	object-fit: contain !important;
+	object-position: center;
+}
+
+#masthead .ast-sticky-shrunk .site-logo-img img,
+#masthead .ast-sticky-shrunk .custom-logo,
+#ast-fixed-header .ast-sticky-shrunk .site-logo-img img,
+#ast-fixed-header .ast-sticky-shrunk .custom-logo,
+.ast-sticky-main-shrink #masthead .ast-sticky-shrunk .site-logo-img img {
+	width: 55px !important;
+	height: 55px !important;
+	max-width: 55px !important;
+	max-height: 55px !important;
+	object-fit: contain !important;
 }
 
 .site-header-primary-section-left .site-branding,
@@ -74,10 +141,86 @@
 	padding-left: 0.55rem;
 }
 
+/* Live-site shadows:
+   caption = “Our curated…” on rasalad.com/portfolio
+   page-bottom = “Want to see more?” block just above the Portfolio footer */
+:root {
+	--ra-caption-shadow: 6px 6px 9px rgba(0, 0, 0, 0.2);
+	--ra-page-bottom-shadow: 0px 50px 15px -44px #00000070;
+}
+
+/* Home Portfolio / Contact pair. Extra air from the photo strip, between
+   the two buttons, and down to the caption-style drop shadow. */
+.home .entry-content > .wp-block-buttons {
+	padding-top: calc(var(--wp--preset--spacing--50) * 1.6) !important;
+	padding-bottom: var(--wp--preset--spacing--50) !important;
+	gap: calc(var(--wp--style--block-gap, 24px) * 1.6);
+}
+
+/* Portfolio caption under the Production Reel. */
+.page-id-18 .ra-gallery--reel + .wp-block-buttons {
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	min-height: calc(var(--wp--preset--spacing--60) * 2);
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	box-shadow: none;
+}
+
+.page-id-18 .ra-gallery--reel + .wp-block-buttons .wp-block-button__link {
+	color: #5e5e5e !important;
+	box-shadow: var(--ra-caption-shadow) !important;
+	padding-top: var(--wp--preset--spacing--20) !important;
+	padding-bottom: var(--wp--preset--spacing--20) !important;
+}
+
+/* Home wordmark and Contact team block: same resting shadow as the
+   live Portfolio “Want to see more?” container (125px-tall box, 25px
+   bottom padding, overlap onto the footer). No green hover. */
+.home .entry-content > figure.wp-block-image.aligncenter,
+.page-id-20 .uagb-block-173a9c4c {
+	position: relative;
+	overflow: visible !important;
+	width: 100%;
+	max-width: none;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	padding-bottom: 25px;
+	box-sizing: border-box;
+}
+
+.home .entry-content > figure.wp-block-image.aligncenter img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.home .entry-content > figure.wp-block-image.aligncenter::after,
+.page-id-20 .uagb-block-173a9c4c::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: 100vw;
+	height: 125px;
+	transform: translateX(-50%);
+	pointer-events: none;
+	box-shadow: var(--ra-page-bottom-shadow);
+}
+
+.home #content,
+.home .ast-container,
+.home .entry-content,
+.page-id-20 #content,
+.page-id-20 .ast-container,
+.page-id-20 .entry-content {
+	overflow: visible;
+}
+
 @media (max-width: 921px) {
 	/* Solid header so the reel cannot show through it or through the
-	   join with the dropdown. The 120px spacer is a few pixels short
-	   of the bar, which left a sliver of video at the top. */
+	   join with the dropdown. */
 	.ast-mobile-header-wrap,
 	.ast-mobile-header-wrap .ast-primary-header-bar,
 	.ast-mobile-header-wrap .main-header-bar {
@@ -94,6 +237,20 @@
 
 	.home .entry-content > .wp-block-spacer:first-child {
 		height: 123px !important;
+	}
+
+	/* Portfolio and Contact: keep the real mobile bar stuck to the
+	   top. Astra's cloned #ast-fixed-header is desktop-oriented. */
+	body:not(.home) #masthead {
+		position: sticky !important;
+		top: 0;
+		z-index: 99;
+		background: #fff !important;
+	}
+
+	body:not(.home) #masthead .ast-mobile-header-wrap,
+	body:not(.home) #masthead .main-header-bar {
+		background: #fff !important;
 	}
 
 	/* Home headline and subhead sit flush against the viewport. */
@@ -114,7 +271,7 @@
 		flex-wrap: nowrap !important;
 		justify-content: center;
 		align-items: center;
-		gap: 1.15em;
+		gap: 1.84em;
 		padding-left: 1.25rem;
 		padding-right: 1.25rem;
 		box-sizing: border-box;
