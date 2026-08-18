@@ -28,25 +28,74 @@
 /* Home header sits over the reel. The theme leaves the bar transparent
    (background:none), which reads as a thin grey line on the video.
    Paint the whole stack white and cover the 1px join. */
-.home #masthead,
-.home #masthead .ast-main-header-wrap,
-.home #masthead .ast-primary-header-bar,
-.home #masthead .main-header-bar,
-.home #masthead .site-primary-header-wrap,
-.home #masthead .ast-mobile-header-wrap,
-.home #masthead .ast-mobile-header-wrap .ast-primary-header-bar,
-.home #masthead .ast-mobile-header-wrap .main-header-bar,
-.home.ast-theme-transparent-header #masthead .main-header-bar,
-.home.ast-theme-transparent-header.ast-header-break-point #masthead .main-header-bar,
-.home #ast-fixed-header,
-.home #ast-fixed-header .main-header-bar,
-.home #ast-fixed-header .ast-primary-header-bar {
+/* Home at-rest header stays white over the reel. The sticky clone
+   (#ast-fixed-header) is nested inside #masthead, so these rules must
+   not reach it or the desktop sticky bar becomes a solid white slab. */
+.home #masthead > #ast-desktop-header,
+.home #masthead > #ast-desktop-header .ast-main-header-wrap,
+.home #masthead > #ast-desktop-header .ast-primary-header-bar,
+.home #masthead > #ast-desktop-header .main-header-bar,
+.home #masthead > #ast-desktop-header .site-primary-header-wrap,
+.home #masthead > #ast-mobile-header,
+.home #masthead > #ast-mobile-header .ast-main-header-wrap,
+.home #masthead > #ast-mobile-header .ast-primary-header-bar,
+.home #masthead > #ast-mobile-header .main-header-bar,
+.home.ast-theme-transparent-header #masthead > #ast-desktop-header .main-header-bar,
+.home.ast-theme-transparent-header.ast-header-break-point #masthead > #ast-mobile-header .main-header-bar {
 	background: #fff !important;
 	background-color: #fff !important;
 	box-shadow: none !important;
 	border: none !important;
 	border-bottom: none !important;
 	outline: none !important;
+}
+
+/* Sticky clone: same frosted glass as Portfolio
+   (rgba(255,255,255,0.62) + blur(20px)). Do not paint it
+   solid white, and do not force background:none — both
+   make Home/Contact diverge from Portfolio. */
+#ast-fixed-header .ast-main-header-wrap,
+#ast-fixed-header .site-primary-header-wrap,
+#ast-fixed-header .ast-mobile-header-wrap {
+	background: transparent !important;
+	background-color: transparent !important;
+}
+
+#ast-fixed-header .main-header-bar,
+#ast-fixed-header .ast-primary-header-bar {
+	background: rgba(255, 255, 255, 0.62) !important;
+	background-color: rgba(255, 255, 255, 0.62) !important;
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+}
+
+/* Contact: same translateY slide as Home/Portfolio. Blur stays off
+   until that 0.3s motion ends, so the frost cannot flash white. */
+.page-id-20 #ast-fixed-header .main-header-bar,
+.page-id-20 #ast-fixed-header .ast-primary-header-bar {
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+
+.page-id-20 #ast-fixed-header.ast-header-sticked .main-header-bar,
+.page-id-20 #ast-fixed-header.ast-header-sticked .ast-primary-header-bar {
+	animation: ra-contact-frost 0.01s linear 0.3s both;
+}
+
+@keyframes ra-contact-frost {
+	from {
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+	}
+	to {
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+	}
+}
+
+html.ast-header-stick-slide-active .home #masthead::after,
+html.ast-header-stick-fade-active .home #masthead::after {
+	display: none;
 }
 
 .home #masthead::after {
@@ -157,11 +206,34 @@
 	gap: calc(var(--wp--style--block-gap, 24px) * 1.6);
 }
 
+/* Invisible spacer block above the Production Reel. Cut its height
+   in half so the reel sits 50% closer to the top of the page. */
+.page-id-18 .entry-content > .wp-block-buttons:first-child {
+	margin-top: calc(var(--wp--preset--spacing--60) * 0.5) !important;
+	margin-bottom: calc(var(--wp--preset--spacing--60) * 0.5) !important;
+}
+
+.page-id-18 .entry-content > .wp-block-buttons:first-child .wp-block-button__link {
+	padding-top: calc(var(--wp--preset--spacing--80) * 0.5) !important;
+	padding-bottom: calc(var(--wp--preset--spacing--80) * 0.5) !important;
+}
+
+.page-id-18 .ra-gallery--reel .ra-gallery__inner {
+	padding-top: 5px;
+}
+
+.page-id-18 .ra-gallery--reel .ra-gallery__grid {
+	width: 80%;
+	margin-inline: auto;
+}
+
 /* Portfolio caption under the Production Reel. */
 .page-id-18 .ra-gallery--reel + .wp-block-buttons {
 	margin-top: 0 !important;
 	margin-bottom: 0 !important;
-	min-height: calc(var(--wp--preset--spacing--60) * 2);
+	min-height: 0;
+	padding-top: var(--wp--preset--spacing--50);
+	padding-bottom: var(--wp--preset--spacing--50);
 	display: flex !important;
 	align-items: center;
 	justify-content: center;
@@ -172,7 +244,49 @@
 	color: #5e5e5e !important;
 	box-shadow: var(--ra-caption-shadow) !important;
 	padding-top: var(--wp--preset--spacing--20) !important;
-	padding-bottom: var(--wp--preset--spacing--20) !important;
+	padding-bottom: calc(var(--wp--preset--spacing--20) * 1.6) !important;
+}
+
+/* Leftover empty buttons block was adding a large gap before the
+   filter chips. Hide it so the caption shadow sits closer to them. */
+.page-id-18 .wp-block-buttons:empty {
+	display: none !important;
+	margin: 0 !important;
+}
+
+.page-id-18 .ra-gallery--grid .ra-gallery__filters {
+	padding-top: 0.35rem;
+	margin-top: 0;
+}
+
+/* Portfolio “Want to see more?” — 30% smaller than the 36px / spacing-50 pill. */
+.page-id-18 .uagb-block-3904caaf .wp-block-button {
+	width: 70% !important;
+}
+
+.page-id-18 .uagb-block-3904caaf .wp-block-button__link {
+	font-size: 25.2px !important;
+	padding: calc(var(--wp--preset--spacing--50) * 0.7) !important;
+}
+
+/* Home Portfolio / Contact pills: green glow on hover. */
+.home .entry-content > .wp-block-buttons .wp-block-button__link {
+	transition: filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home .entry-content > .wp-block-buttons .wp-block-button__link:hover,
+.home .entry-content > .wp-block-buttons .wp-block-button__link:focus {
+	filter: brightness(1.18);
+	box-shadow: 0 6px 22px rgba(33, 136, 72, 0.5);
+}
+
+/* Contact form submit: green hover instead of the Spectra/WP blue. */
+.page-id-20 .uagb-forms-main-submit-button:hover,
+.page-id-20 .uagb-forms-main-submit-button:focus {
+	background: var(--ast-global-color-1, #218848) !important;
+	background-color: var(--ast-global-color-1, #218848) !important;
+	border-color: var(--ast-global-color-1, #218848) !important;
+	color: #fff !important;
 }
 
 /* Home wordmark and Contact team block: same resting shadow as the
@@ -221,9 +335,9 @@
 @media (max-width: 921px) {
 	/* Solid header so the reel cannot show through it or through the
 	   join with the dropdown. */
-	.ast-mobile-header-wrap,
-	.ast-mobile-header-wrap .ast-primary-header-bar,
-	.ast-mobile-header-wrap .main-header-bar {
+	#masthead > #ast-mobile-header,
+	#masthead > #ast-mobile-header .ast-primary-header-bar,
+	#masthead > #ast-mobile-header .main-header-bar {
 		background: #fff !important;
 		box-shadow: none !important;
 		border-bottom: none !important;
@@ -240,7 +354,8 @@
 	}
 
 	/* Portfolio and Contact: keep the real mobile bar stuck to the
-	   top. Astra's cloned #ast-fixed-header is desktop-oriented. */
+	   top. Hide Astra's fade/slide clone so it cannot appear
+	   translucent and then get covered by this white bar. */
 	body:not(.home) #masthead {
 		position: sticky !important;
 		top: 0;
@@ -251,6 +366,11 @@
 	body:not(.home) #masthead .ast-mobile-header-wrap,
 	body:not(.home) #masthead .main-header-bar {
 		background: #fff !important;
+	}
+
+	body:not(.home) #ast-fixed-header {
+		display: none !important;
+		visibility: hidden !important;
 	}
 
 	/* Home headline and subhead sit flush against the viewport. */
@@ -314,5 +434,11 @@
 
 	.page-id-20 .ra-photo-strip {
 		margin-top: 1.35rem !important;
+	}
+
+	/* Portfolio body copy is 25px on desktop; 60% smaller on mobile. */
+	.page-id-18 .ra-gallery--reel + .wp-block-buttons .wp-block-button__link,
+	.page-id-18 .ra-gallery--grid + .wp-block-buttons .wp-block-button__link {
+		font-size: 10px !important;
 	}
 }

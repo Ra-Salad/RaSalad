@@ -58,7 +58,7 @@ window.RA_PORTFOLIO = {
 	reel: {
 		youtube: "p_sRUSicNCA",
 		title: "Ra Salad Reel",
-		poster: "media/thumbnails/production-reel-2048x1152.png"
+		poster: "media/thumbnails/production-reel-2048x1152.png?v=20260817"
 	},
 
 	// Filter buttons, shown in this order after "All Videos".
